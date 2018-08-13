@@ -1,0 +1,9 @@
+<h1>{{ movie.movie_text }}</h1>
+
+<ul>
+{% for choice in movie.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'moviepolls:detail' movie.id %}">Vote again?</a>

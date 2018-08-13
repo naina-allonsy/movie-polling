@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'moviepolls/style.css' %}">
+
+{% if latest_movie_list %}
+    <ul>
+    {% for movie in latest_movie_list %}
+        <li><a href="{% url 'moviepolls:detail' movie.id %}">{{ movie.movie_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
