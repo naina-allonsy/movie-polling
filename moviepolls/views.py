@@ -1,11 +1,12 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response
 
 from django.http import HttpResponse, HttpResponseRedirect
-
 from .models import Movie
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+
+import pygal
 
 class IndexView(generic.ListView):
     template_name = 'moviepolls/index.html'
@@ -28,11 +29,10 @@ class DetailView(generic.DetailView):
         """
         return Movie.objects.filter(pub_date__lte=timezone.now())
 
-
 class ResultsView(generic.DetailView):
     model = Movie
     template_name = 'moviepolls/results.html'
-
+    
 def vote(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     try:
@@ -50,3 +50,6 @@ def vote(request, movie_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('moviepolls:results', args=(movie.id,)))
+
+
+
